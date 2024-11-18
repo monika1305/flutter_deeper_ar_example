@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:deepar_flutter/deepar_flutter.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ar_project/core/config.dart';
 import 'package:flutter_ar_project/data/filters_data.dart';
@@ -25,10 +26,8 @@ class _HomePageState extends State<HomePage> {
           resolution: Resolution.high,
         );
       } catch (e) {
-        print("Error initializing DeepAR: $e");
+        throw("Error Error initializing DeepAR: $e");
       }
-    } else {
-      print("DeepARController has already been initialized.");
     }
   }
 
@@ -81,24 +80,17 @@ class _HomePageState extends State<HomePage> {
         itemCount: filters.length,
         itemBuilder: (BuildContext context, int index) {
           final filter = filters[index];
-          print(filter.filtersPath);
-          print(filter.imagePath);
-
           final effectFile = File('assets/filters/${filter.filtersPath}').path;
-
-          // Log for debugging
-          print("Effect File: $effectFile");
-          print("Preview Image: assets/previews/${filter.imagePath}");
-
           return InkWell(
             onTap: () {
               try {
                 // Apply the filter
                 deepArController?.switchEffect(effectFile);
 
-                print("Filter applied: $effectFile");
               } catch (e) {
-                print("Error applying filter: $e");
+                if (kDebugMode) {
+                  print("Error applying filter: $e");
+                }
               }
             },
             child: Padding(

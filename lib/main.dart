@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ar_project/pages/home_page.dart';
-import 'package:flutter_ar_project/utils/permission_handler.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
